@@ -48,7 +48,7 @@ if __name__ == "__main__":
     # Starts exception handling suites for signal event loop
     try:
         # Creates file access object
-        file = open(f"../data/az_log_{start_dt_str}.txt", "w")
+        file = open(f"/home/pcm/Documents/data/az_log_{start_dt_str}.txt", "w")
         # Starts signal event handling loop
         pause()
 
