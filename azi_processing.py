@@ -4,6 +4,7 @@ computing the azimuth angle at a specific date and time.
 '''
 
 # Imports packages
+from datetime import datetime
 
 # Defines function to calculate azimuth angle (degrees) for date time
 def azimuth(dt):
