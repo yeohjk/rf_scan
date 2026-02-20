@@ -90,12 +90,18 @@ def dt_from_time_str(input_str, dt_ref):
 
 # Main body of script
 if __name__ == "__main__":
-    # Prompt user for input of raw data file name
+    # Prompts user for input of raw data file name
     file_name = input("Please input name of logged azimuth data file: ")
-    # Extract out raw data and transform into list of datetime objects
+    # Extracts out raw data and transform into list of datetime objects
     dt_list = extract(file_name)
     # Displays the number of entries
-    print(f"Number of Entries: {len(dt_list)}")
+    print(f"Number of entries in data file: {len(dt_list)}")
 
-    # Prompt user for input of time of interest
+    # Prompts user for input of time of interest
     time_str = input("Please input time of interest (HH:MM:SS.ssssss): ")
+    # Creates datetime object for time of interest
+    dt_interest = dt_from_time_str(time_str, dt_list[0])
+    # Calculates azimuth angle for time of interest
+    azi_ang = azimuth(dt_interest, dt_list)
+    # Displays azimuth angle
+    print(f"Azimuth angle at {time_str}:\n{azi_ang:.2f}")
