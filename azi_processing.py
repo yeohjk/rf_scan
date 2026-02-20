@@ -44,3 +44,12 @@ def azimuth(dt):
     date and time using interpolation of logged azimuth data.
     '''
     return
+
+# Main body of script
+if __name__ == "__main__":
+    # Prompt user for input of raw data file name
+    file_name = input("Please input name of logged azimuth data file: ")
+    # Extract out raw data and transform into list of datetime objects
+    dt_list = extract(file_name)
+    # Displays the number of entries
+    print(f"Number of Entries: {len(dt_list)}")
