@@ -38,12 +38,55 @@ def extract(file_name):
     return dt_list
 
 # Defines function to calculate azimuth angle (degrees) for date and time
-def azimuth(dt):
+def azimuth(dt, dt_list):
     '''
     This function calculates azimuth angle (degrees) for specific
     date and time using interpolation of logged azimuth data.
     '''
-    return
+    # Instantiates index
+    ind = 0
+    
+    # Loops through every datetime stamp in datetime list
+    while True:
+        # Assigns end_time to particular entry
+        end_time = dt_list[ind]
+        # Checks for dt being inside a time interval
+        if dt <= end_time:
+            # Assigns start_time to particular entry
+            start_time = dt_list[ind - 1]
+            # Calculates azimuth interval duration in seconds
+            interval_time = (end_time - start_time).total_seconds()
+            # Calculates time elapsed in seconds for position
+            time_seconds = (dt - start_time).total_seconds()
+            # Interpolates for azimuth angle
+            azi_ang = (time_seconds/interval_time) * 360
+            # For the case of angle = 360 degrees
+            if azi_ang == 360:
+                azi_ang = 0.00
+            break
+        # Increase index value by one
+        ind += 1
+    return azi_ang
+
+# Defines function to format input string into datetime object
+def dt_from_time_str(input_str, dt_ref):
+    '''
+    This function formats the user provided input string into a
+    datetime object. It takes in the input string and a datetime
+    object as reference for the date. The datetime object with the
+    reference date and input string time is returned.
+    '''
+    # Creates constant time parsing format
+    FORMAT_STR = '%H:%M:%S.%f'
+
+    # Converts string to time object
+    dt_input = datetime.strptime(input_str, FORMAT_STR).time()
+
+    # Combines date from reference with parsed time
+    new_datetime = datetime.combine(dt_ref.date(), dt_input)
+
+    return new_datetime
+    
 
 # Main body of script
 if __name__ == "__main__":
@@ -53,3 +96,6 @@ if __name__ == "__main__":
     dt_list = extract(file_name)
     # Displays the number of entries
     print(f"Number of Entries: {len(dt_list)}")
+
+    # Prompt user for input of time of interest
+    time_str = input("Please input time of interest (HH:MM:SS.ssssss): ")
